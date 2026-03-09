@@ -234,16 +234,16 @@ const PRODUCTS = [
     badge: 'badge-stock', badgeText: 'Ready Stock',
     image: 'media/products/food tray eco kraft.jpeg',
     material: 'Eco-Kraft', desc: 'Food tray terbuka Eco-Kraft 275gr. Cocok untuk gorengan dan sushi.',
-    sizes: ['M (150x80x50)', 'L (160x105x50)'],
+    sizes: ['M (A:190x120, B:150x80, T:50)', 'L (A:195x140, B:160x105, T:50)'],
     materials: ['Eco-Kraft (275gr)'],
     prints: ['1 Warna', '2 Warna'],
     laminasi: ['Laminasi Dalam'],
     minOrder: 500,
     priceMatrix: {
-      'M (150x80x50)|Eco-Kraft (275gr)|1 Warna|Laminasi Dalam': { 500: 1285, 1000: 835, 2000: 715 },
-      'M (150x80x50)|Eco-Kraft (275gr)|2 Warna|Laminasi Dalam': { 500: 1515, 1000: 975, 2000: 805 },
-      'L (160x105x50)|Eco-Kraft (275gr)|1 Warna|Laminasi Dalam': { 500: 1435, 1000: 995, 2000: 875 },
-      'L (160x105x50)|Eco-Kraft (275gr)|2 Warna|Laminasi Dalam': { 500: 1665, 1000: 1125, 2000: 955 },
+      'M (A:190x120, B:150x80, T:50)|Eco-Kraft (275gr)|1 Warna|Laminasi Dalam': { 500: 1285, 1000: 835, 2000: 715 },
+      'M (A:190x120, B:150x80, T:50)|Eco-Kraft (275gr)|2 Warna|Laminasi Dalam': { 500: 1515, 1000: 975, 2000: 805 },
+      'L (A:195x140, B:160x105, T:50)|Eco-Kraft (275gr)|1 Warna|Laminasi Dalam': { 500: 1435, 1000: 995, 2000: 875 },
+      'L (A:195x140, B:160x105, T:50)|Eco-Kraft (275gr)|2 Warna|Laminasi Dalam': { 500: 1665, 1000: 1125, 2000: 955 },
     }
   },
   {
@@ -251,16 +251,16 @@ const PRODUCTS = [
     badge: 'badge-stock', badgeText: 'Ready Stock',
     image: 'media/products/food tray foodgrade.jpeg',
     material: 'Food Grade', desc: 'Food tray terbuka Food Grade Foopak 275gr.',
-    sizes: ['M (150x80x50)', 'L (160x105x50)'],
+    sizes: ['M (A:190x120, B:150x80, T:50)', 'L (A:195x140, B:160x105, T:50)'],
     materials: ['Food Grade (Foopak 275)'],
     prints: ['1 Warna', 'Full Color'],
     laminasi: ['Laminasi Dalam'],
     minOrder: 500,
     priceMatrix: {
-      'M (150x80x50)|Food Grade (Foopak 275)|1 Warna|Laminasi Dalam': { 500: 1575, 1000: 1095, 2000: 965 },
-      'M (150x80x50)|Food Grade (Foopak 275)|Full Color|Laminasi Dalam': { 500: 1765, 1000: 1275, 2000: 1075 },
-      'L (160x105x50)|Food Grade (Foopak 275)|1 Warna|Laminasi Dalam': { 500: 1615, 1000: 1135, 2000: 995 },
-      'L (160x105x50)|Food Grade (Foopak 275)|Full Color|Laminasi Dalam': { 500: 1905, 1000: 1305, 2000: 1005 },
+      'M (A:190x120, B:150x80, T:50)|Food Grade (Foopak 275)|1 Warna|Laminasi Dalam': { 500: 1575, 1000: 1095, 2000: 965 },
+      'M (A:190x120, B:150x80, T:50)|Food Grade (Foopak 275)|Full Color|Laminasi Dalam': { 500: 1765, 1000: 1275, 2000: 1075 },
+      'L (A:195x140, B:160x105, T:50)|Food Grade (Foopak 275)|1 Warna|Laminasi Dalam': { 500: 1615, 1000: 1135, 2000: 995 },
+      'L (A:195x140, B:160x105, T:50)|Food Grade (Foopak 275)|Full Color|Laminasi Dalam': { 500: 1905, 1000: 1305, 2000: 1005 },
     }
   },
   {
@@ -319,16 +319,16 @@ const PRODUCTS = [
     badge: 'badge-stock', badgeText: 'Ready Stock',
     image: 'media/products/dus ayam goreng eco-kraft.jpeg',
     material: 'Eco-Kraft', desc: 'Dus khusus ayam geprek material Kraft 275gr. Bawah 125x83mm.',
-    sizes: ['125x83x45'],
+    sizes: ['A:150x105, B:125x83, T:45'],
     materials: ['Eco-Kraft (275gr)'],
     prints: ['1 Warna', '2 Warna'],
     laminasi: ['Tanpa Laminasi', 'Laminasi Dalam'],
     minOrder: 500,
     priceMatrix: {
-      '125x83x45|Eco-Kraft (275gr)|1 Warna|Tanpa Laminasi': { 500: 1380, 1000: 920, 2000: 790 },
-      '125x83x45|Eco-Kraft (275gr)|1 Warna|Laminasi Dalam': { 500: 1605, 1000: 1145, 2000: 1015 },
-      '125x83x45|Eco-Kraft (275gr)|2 Warna|Tanpa Laminasi': { 500: 1610, 1000: 1060, 2000: 880 },
-      '125x83x45|Eco-Kraft (275gr)|2 Warna|Laminasi Dalam': { 500: 1835, 1000: 1285, 2000: 1105 },
+      'A:150x105, B:125x83, T:45|Eco-Kraft (275gr)|1 Warna|Tanpa Laminasi': { 500: 1380, 1000: 920, 2000: 790 },
+      'A:150x105, B:125x83, T:45|Eco-Kraft (275gr)|1 Warna|Laminasi Dalam': { 500: 1605, 1000: 1145, 2000: 1015 },
+      'A:150x105, B:125x83, T:45|Eco-Kraft (275gr)|2 Warna|Tanpa Laminasi': { 500: 1610, 1000: 1060, 2000: 880 },
+      'A:150x105, B:125x83, T:45|Eco-Kraft (275gr)|2 Warna|Laminasi Dalam': { 500: 1835, 1000: 1285, 2000: 1105 },
     }
   },
   {
@@ -336,14 +336,14 @@ const PRODUCTS = [
     badge: 'badge-stock', badgeText: 'Ready Stock',
     image: 'media/products/dus ayam geprek food grade.jpeg',
     material: 'Food Grade', desc: 'Dus ayam geprek Food Grade Foopak 275gr. Aman untuk sambal berminyak.',
-    sizes: ['125x83x45'],
+    sizes: ['A:150x105, B:125x83, T:45'],
     materials: ['Food Grade (Foopak 275)'],
     prints: ['1 Warna', 'Full Color'],
     laminasi: ['Laminasi Dalam'],
     minOrder: 500,
     priceMatrix: {
-      '125x83x45|Food Grade (Foopak 275)|1 Warna|Laminasi Dalam': { 500: 1950, 1000: 1430, 2000: 1280 },
-      '125x83x45|Food Grade (Foopak 275)|Full Color|Laminasi Dalam': { 500: 2140, 1000: 1600, 2000: 1390 },
+      'A:150x105, B:125x83, T:45|Food Grade (Foopak 275)|1 Warna|Laminasi Dalam': { 500: 1950, 1000: 1430, 2000: 1280 },
+      'A:150x105, B:125x83, T:45|Food Grade (Foopak 275)|Full Color|Laminasi Dalam': { 500: 2140, 1000: 1600, 2000: 1390 },
     }
   },
   {
