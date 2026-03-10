@@ -14,11 +14,27 @@
             "use": "@vercel/static"
         },
         {
-            "src": "**/*.{css,js,png,jpg,jpeg,gif,svg,mp4,webm,pdf}",
+            "src": "**/*.{css,js,png,jpg,jpeg,gif,svg,mp4,webm,pdf,ico,webp}",
             "use": "@vercel/static"
         }
     ],
     "routes": [
+        {
+            "src": "/favicon\\.ico",
+            "dest": "/favicon.ico"
+        },
+        {
+            "src": "/favicon\\.png",
+            "dest": "/favicon.png"
+        },
+        {
+            "src": "/logo\\.png",
+            "dest": "/logo.png"
+        },
+        {
+            "src": "/apple-touch-icon\\.png",
+            "dest": "/apple-touch-icon.png"
+        },
         {
             "src": "/api/(.*)",
             "dest": "server.js"
