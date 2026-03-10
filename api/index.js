@@ -18,16 +18,16 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Middleware
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, './')));
+app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, '..')));
 
 // Custom route for animation logo
-app.use('/animation-logo', express.static(path.join(__dirname, 'animation logo')));
+app.use('/animation-logo', express.static(path.join(__dirname, '../animation logo')));
 
 // Ultimate Fallback: Serve icons directly via Express 
 // This forces Vercel to serve the file since the backend is explicitly asking for it
 const serveFile = (filename) => (req, res) => {
-    const filePath = path.join(__dirname, filename);
+    const filePath = path.join(__dirname, '..', filename);
     res.sendFile(filePath, (err) => {
         if (err) {
             console.error(`Failed to serve ${filename}:`, err);
@@ -217,7 +217,7 @@ app.post('/api/clear-orders', async (req, res) => {
 
 // Serve the admin page
 app.get('/admin', (req, res) => {
-    res.sendFile(path.join(__dirname, 'admin.html'));
+    res.sendFile(path.join(__dirname, '..', 'admin.html'));
 });
 
 app.listen(PORT, () => {
