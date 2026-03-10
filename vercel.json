@@ -2,16 +2,14 @@
     "version": 2,
     "name": "printwork-web",
     "regions": ["sin1"],
-    "builds": [
-        { "src": "server.js", "use": "@vercel/node" },
-        { "src": "*.html", "use": "@vercel/static" },
-        { "src": "*.{png,jpg,jpeg,ico,svg,mp4,webm,pdf,css,js}", "use": "@vercel/static" },
-        { "src": "media/*", "use": "@vercel/static" }
-    ],
-    "routes": [
-        { "src": "/api/(.*)", "dest": "server.js" },
-        { "src": "/health", "dest": "server.js" },
-        { "src": "/admin", "dest": "server.js" },
-        { "src": "/(.*)", "dest": "/$1" }
+    "rewrites": [
+        { "source": "/favicon.png", "destination": "/public/identity.png" },
+        { "source": "/favicon.ico", "destination": "/public/favicon.ico" },
+        { "source": "/logo.png", "destination": "/public/logo.png" },
+        { "source": "/site-logo.png", "destination": "/public/site-logo.png" },
+        { "source": "/apple-touch-icon.png", "destination": "/public/apple-touch-icon.png" },
+        { "source": "/api/(.*)", "destination": "/api/server.js" },
+        { "source": "/health", "destination": "/api/server.js" },
+        { "source": "/admin", "destination": "/api/server.js" }
     ]
 }
