@@ -24,6 +24,23 @@ app.use(express.static(path.join(__dirname, './')));
 // Custom route for animation logo
 app.use('/animation-logo', express.static(path.join(__dirname, 'animation logo')));
 
+// Ultimate Fallback: Serve icons directly via Express 
+// This forces Vercel to serve the file since the backend is explicitly asking for it
+const serveFile = (filename) => (req, res) => {
+    const filePath = path.join(__dirname, filename);
+    res.sendFile(filePath, (err) => {
+        if (err) {
+            console.error(`Failed to serve ${filename}:`, err);
+            res.status(404).end();
+        }
+    });
+};
+
+app.get('/identity-printwork.png', serveFile('identity-printwork.png'));
+app.get('/favicon.png', serveFile('identity-printwork.png')); // Alias for safety
+app.get('/favicon.ico', serveFile('favicon.ico'));
+app.get('/logo.png', serveFile('logo.png'));
+
 // Health Check
 app.get('/health', (req, res) => res.status(200).send('OK'));
 
