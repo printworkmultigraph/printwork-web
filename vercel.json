@@ -20,19 +20,23 @@
     ],
     "routes": [
         {
-            "src": "/favicon\\.ico",
+            "src": "/site-icon.png",
+            "dest": "/site-icon.png"
+        },
+        {
+            "src": "/favicon.ico",
             "dest": "/favicon.ico"
         },
         {
-            "src": "/favicon\\.png",
+            "src": "/favicon.png",
             "dest": "/favicon.png"
         },
         {
-            "src": "/logo\\.png",
+            "src": "/logo.png",
             "dest": "/logo.png"
         },
         {
-            "src": "/apple-touch-icon\\.png",
+            "src": "/apple-touch-icon.png",
             "dest": "/apple-touch-icon.png"
         },
         {
