@@ -18,6 +18,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Middleware
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, './')));
 
 // Custom route for animation logo
