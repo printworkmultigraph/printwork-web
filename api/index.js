@@ -40,6 +40,15 @@ app.get('/identity-printwork.png', serveFile('identity-printwork.png'));
 app.get('/favicon.png', serveFile('identity-printwork.png')); // Alias for safety
 app.get('/favicon.ico', serveFile('favicon.ico'));
 app.get('/logo.png', serveFile('logo.png'));
+app.get('/sponsors/jotun-official.png', (req, res) => {
+    const filePath = path.join(__dirname, '..', 'sponsors', 'jotun-official.png');
+    res.sendFile(filePath, (err) => {
+        if (err) {
+            console.error(`Failed to serve jotun-official.png:`, err);
+            res.status(404).end();
+        }
+    });
+});
 
 // Health Check
 app.get('/health', (req, res) => res.status(200).send('OK'));
