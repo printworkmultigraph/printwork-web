@@ -1,39 +1,68 @@
-import { motion } from 'framer-motion';
+import { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
 
-export default function CustomSolutionsBanner() {
-  return (
-    <section className="py-24">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
-        <motion.div
-          className="relative bg-navy-900 rounded-[2rem] overflow-hidden p-10 md:p-16 lg:p-20"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-        >
-          {/* Decorative shapes */}
-          <div className="absolute top-0 right-0 w-80 h-80 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
-          <div className="absolute bottom-0 left-0 w-60 h-60 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
+const words = ['Brands', 'that', 'thrive', 'invest', 'in', 'custom-designed', 'packaging.'];
 
-          <div className="relative z-10 max-w-2xl">
-            <p className="text-white/40 text-xs tracking-[0.3em] uppercase mb-6">Custom Solutions</p>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-medium text-white leading-tight mb-6">
-              Brands that thrive invest in{' '}
-              <span className="italic text-white/70">custom-designed</span>{' '}
-              packaging.
-            </h2>
-            <p className="text-white/50 leading-relaxed mb-10 max-w-lg">
-              Let us help bring your vision to life. Not sure what's possible? Get in touch to find out.
-            </p>
-            <Link
-              to="/Contact"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-white text-navy-900 text-sm font-semibold rounded-full hover:bg-white/90 transition-colors group"
+export default function CustomSolutionsBanner() {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: '-100px' });
+
+  return (
+    <section ref={ref} className="py-16 px-6 lg:px-10">
+      <div className="max-w-[1400px] mx-auto">
+        <motion.div
+          className="relative bg-navy-900 rounded-[2rem] overflow-hidden px-10 py-16 md:px-16 md:py-20 lg:px-24"
+          initial={{ opacity: 0, y: 60, borderRadius: '3rem' }}
+          animate={inView ? { opacity: 1, y: 0, borderRadius: '2rem' } : {}}
+          transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+        >
+          {/* Ambient circles */}
+          <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-white/[0.03]" />
+          <div className="absolute -bottom-16 -left-16 w-64 h-64 rounded-full bg-white/[0.04]" />
+
+          <div className="relative z-10">
+            <motion.p
+              className="text-[10px] font-jost text-white/30 tracking-[0.3em] uppercase mb-8"
+              initial={{ opacity: 0 }}
+              animate={inView ? { opacity: 1 } : {}}
+              transition={{ delay: 0.3 }}
             >
-              Enquire now
-              <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-            </Link>
+              Custom Solutions
+            </motion.p>
+
+            {/* Word-by-word reveal */}
+            <div className="mb-10 flex flex-wrap gap-x-[0.35em] gap-y-1">
+              {words.map((word, i) => (
+                <div key={i} style={{ overflow: 'hidden' }}>
+                  <motion.span
+                    className="block font-display text-3xl md:text-5xl lg:text-6xl font-medium text-white leading-tight"
+                    initial={{ y: '110%' }}
+                    animate={inView ? { y: '0%' } : {}}
+                    transition={{ duration: 0.75, ease: [0.76, 0, 0.24, 1], delay: 0.2 + i * 0.07 }}
+                  >
+                    {word === 'custom-designed' ? <em className="font-light text-white/60">{word}</em> : word}
+                  </motion.span>
+                </div>
+              ))}
+            </div>
+
+            <motion.div
+              className="flex flex-col sm:flex-row sm:items-center gap-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.75 }}
+            >
+              <Link
+                to="/Contact"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-white text-navy-900 text-sm font-jost font-semibold rounded-full hover:bg-white/90 transition-colors group"
+              >
+                Enquire now
+                <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </Link>
+              <span className="text-sm font-jost text-white/40">Not sure what's possible? Get in touch.</span>
+            </motion.div>
           </div>
         </motion.div>
       </div>

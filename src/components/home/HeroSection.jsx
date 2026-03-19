@@ -1,116 +1,133 @@
-import { motion } from 'framer-motion';
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 
-const HERO_IMAGE = 'https://media.base44.com/images/public/69bb88d987e87c84bc284bfc/224c87e4e_generated_b896c195.png';
+const HERO_IMAGE = 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1600&q=85';
 
-const words = ['Packaging', 'that', 'Performs.'];
-const subtitle = ['Innovated', 'for', 'Industry', 'Leaders.'];
+// Staggered line reveal — each line slides up from overflow:hidden
+function LineReveal({ children, delay = 0 }) {
+  return (
+    <div style={{ overflow: 'hidden', display: 'block' }}>
+      <motion.div
+        initial={{ y: '110%' }}
+        animate={{ y: '0%' }}
+        transition={{ duration: 1, ease: [0.76, 0, 0.24, 1], delay }}
+      >
+        {children}
+      </motion.div>
+    </div>
+  );
+}
 
 export default function HeroSection() {
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({ target: containerRef, offset: ['start start', 'end start'] });
+  const imgY = useTransform(scrollYProgress, [0, 1], ['0%', '25%']);
+  const textY = useTransform(scrollYProgress, [0, 1], ['0%', '15%']);
+
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Background image */}
-      <div className="absolute inset-0">
-        <motion.img
+    <section ref={containerRef} className="relative min-h-screen flex items-center overflow-hidden">
+      {/* Parallax bg image */}
+      <motion.div className="absolute inset-0" style={{ y: imgY }}>
+        <img
           src={HERO_IMAGE}
           alt="Premium packaging"
-          className="w-full h-full object-cover"
-          initial={{ scale: 1.15 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 1.8, ease: [0.76, 0, 0.24, 1] }}
+          className="w-full h-[115%] object-cover"
+          style={{ marginTop: '-7.5%' }}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/85 to-white/30" />
-      </div>
+        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-white/20" />
+      </motion.div>
 
-      <div className="relative max-w-[1400px] mx-auto px-6 lg:px-10 w-full pt-32 pb-20">
-        <div className="max-w-2xl">
-          {/* Title */}
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-display font-medium leading-[0.95] mb-4">
-            {words.map((word, i) => (
-              <motion.span
-                key={i}
-                className="inline-block mr-[0.25em]"
-                initial={{ opacity: 0, y: 60, rotateX: -40 }}
-                animate={{ opacity: 1, y: 0, rotateX: 0 }}
-                transition={{
-                  duration: 0.8,
-                  delay: 0.3 + i * 0.12,
-                  ease: [0.76, 0, 0.24, 1],
-                }}
-              >
-                {word === 'Performs.' ? (
-                  <span className="italic text-navy-600">{word}</span>
-                ) : word}
-              </motion.span>
-            ))}
-          </h1>
-
-          <div className="mb-8">
-            {subtitle.map((word, i) => (
-              <motion.span
-                key={i}
-                className="inline-block mr-[0.25em] text-2xl sm:text-3xl lg:text-4xl font-display text-navy-500 font-light"
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.7,
-                  delay: 0.8 + i * 0.1,
-                  ease: [0.76, 0, 0.24, 1],
-                }}
-              >
-                {word}
-              </motion.span>
-            ))}
+      {/* Content */}
+      <motion.div
+        className="relative max-w-[1400px] mx-auto px-6 lg:px-10 w-full pt-36 pb-24"
+        style={{ y: textY }}
+      >
+        <div className="max-w-3xl">
+          {/* Eyebrow */}
+          <div style={{ overflow: 'hidden' }}>
+            <motion.p
+              className="text-xs font-jost text-navy-400 tracking-[0.35em] uppercase mb-6"
+              initial={{ y: '100%', opacity: 0 }}
+              animate={{ y: '0%', opacity: 1 }}
+              transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1], delay: 0.1 }}
+            >
+              Premium Food Packaging
+            </motion.p>
           </div>
 
-          {/* Description */}
-          <motion.p
-            className="text-base text-navy-500 leading-relaxed max-w-md mb-10"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 1.3 }}
-          >
-            Premium packaging solutions for food service, food processing, and agricultural businesses across the globe.
-          </motion.p>
+          {/* Headline — each line in its own overflow:hidden container */}
+          <h1 className="font-display font-medium leading-[0.92] mb-8"
+              style={{ fontSize: 'clamp(3.2rem, 8vw, 8rem)' }}>
+            <LineReveal delay={0.25}>
+              <span className="block text-navy-900">Packaging</span>
+            </LineReveal>
+            <LineReveal delay={0.38}>
+              <span className="block text-navy-900">that <em className="text-navy-500 not-italic font-light">Performs.</em></span>
+            </LineReveal>
+          </h1>
+
+          {/* Sub-headline */}
+          <div className="mb-10">
+            <LineReveal delay={0.52}>
+              <p className="text-lg md:text-xl font-display font-light text-navy-600 leading-snug">
+                Innovated for Industry Leaders.
+              </p>
+            </LineReveal>
+          </div>
+
+          {/* Body */}
+          <div style={{ overflow: 'hidden' }}>
+            <motion.p
+              className="text-sm font-jost text-navy-500 leading-relaxed max-w-md mb-10"
+              initial={{ y: '100%', opacity: 0 }}
+              animate={{ y: '0%', opacity: 1 }}
+              transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1], delay: 0.65 }}
+            >
+              Premium packaging solutions for food service, food processing, and agricultural businesses across the globe.
+            </motion.p>
+          </div>
 
           {/* CTAs */}
           <motion.div
             className="flex flex-wrap gap-4"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 1.5 }}
+            transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1], delay: 0.8 }}
           >
             <Link
               to="/Shop"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-navy-900 text-white text-sm font-semibold tracking-wide rounded-full hover:bg-navy-800 transition-colors group"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-navy-900 text-white text-sm font-jost font-semibold tracking-wide rounded-full hover:bg-navy-800 transition-colors duration-300 group"
             >
               Shop Products
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <motion.span whileHover={{ x: 4 }} transition={{ type: 'spring', stiffness: 400 }}>
+                <ArrowRight className="w-4 h-4" />
+              </motion.span>
             </Link>
             <Link
               to="/Contact"
-              className="inline-flex items-center gap-2 px-8 py-4 border-2 border-navy-900 text-navy-900 text-sm font-semibold tracking-wide rounded-full hover:bg-navy-900 hover:text-white transition-colors"
+              className="inline-flex items-center gap-2 px-8 py-4 border border-navy-300 text-navy-900 text-sm font-jost font-semibold tracking-wide rounded-full hover:border-navy-900 hover:bg-navy-900 hover:text-white transition-all duration-300"
             >
               Custom Solutions
             </Link>
           </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Scroll indicator */}
       <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        animate={{ y: [0, 8, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.4 }}
       >
-        <div className="w-6 h-10 border-2 border-navy-300 rounded-full flex items-start justify-center pt-2">
-          <motion.div
-            className="w-1 h-2.5 bg-navy-400 rounded-full"
-            animate={{ opacity: [0.4, 1, 0.4] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          />
-        </div>
+        <motion.div
+          className="w-px h-12 bg-navy-300 origin-top"
+          animate={{ scaleY: [0, 1, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <span className="text-[10px] font-jost text-navy-300 tracking-[0.2em] uppercase">Scroll</span>
       </motion.div>
     </section>
   );

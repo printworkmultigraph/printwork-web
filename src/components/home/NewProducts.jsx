@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import ProductCard from '../ProductCard';
@@ -8,6 +8,8 @@ import HorizontalSlider from '../HorizontalSlider';
 export default function NewProducts() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: '-80px' });
 
   useEffect(() => {
     const load = async () => {
@@ -19,28 +21,44 @@ export default function NewProducts() {
   }, []);
 
   return (
-    <section className="py-24 bg-secondary">
+    <section ref={ref} className="py-24 bg-secondary">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
-        <motion.div
-          className="flex items-end justify-between mb-12"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
+        <div className="flex items-end justify-between mb-12">
           <div>
-            <p className="text-navy-400 text-xs tracking-[0.3em] uppercase mb-3">Just Arrived</p>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-medium text-navy-900">
-              New <span className="italic text-navy-500">Products</span>
-            </h2>
+            <div style={{ overflow: 'hidden' }}>
+              <motion.p
+                className="text-[10px] font-jost text-navy-400 tracking-[0.3em] uppercase mb-3"
+                initial={{ y: '100%' }}
+                animate={inView ? { y: '0%' } : {}}
+                transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
+              >
+                Just Arrived
+              </motion.p>
+            </div>
+            <div style={{ overflow: 'hidden' }}>
+              <motion.h2
+                className="text-3xl md:text-4xl lg:text-5xl font-display font-medium text-navy-900"
+                initial={{ y: '100%' }}
+                animate={inView ? { y: '0%' } : {}}
+                transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1], delay: 0.1 }}
+              >
+                New <em className="font-light text-navy-500">Products</em>
+              </motion.h2>
+            </div>
           </div>
-          <Link
-            to="/Shop"
-            className="hidden md:inline-flex items-center gap-2 px-6 py-3 bg-navy-900 text-white text-sm font-semibold rounded-full hover:bg-navy-800 transition-colors"
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            transition={{ delay: 0.4 }}
           >
-            Shop now
-          </Link>
-        </motion.div>
+            <Link
+              to="/Shop"
+              className="hidden md:inline-flex items-center gap-2 px-6 py-3 bg-navy-900 text-white text-sm font-jost font-semibold rounded-full hover:bg-navy-800 transition-colors"
+            >
+              Shop now
+            </Link>
+          </motion.div>
+        </div>
 
         {loading ? (
           <div className="flex gap-5 overflow-hidden">
@@ -64,7 +82,7 @@ export default function NewProducts() {
 
         <Link
           to="/Shop"
-          className="md:hidden inline-flex items-center gap-2 mt-8 px-6 py-3 bg-navy-900 text-white text-sm font-semibold rounded-full"
+          className="md:hidden inline-flex items-center gap-2 mt-8 px-6 py-3 bg-navy-900 text-white text-sm font-jost font-semibold rounded-full"
         >
           Shop now
         </Link>
