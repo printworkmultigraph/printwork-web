@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 
-const HERO_IMAGE = '/__generating__/img_73bd96938a2f.png';
+const HERO_IMAGE = 'https://media.base44.com/images/public/69bb88d987e87c84bc284bfc/224c87e4e_generated_b896c195.png';
 
 const words = ['Packaging', 'that', 'Performs.'];
 const subtitle = ['Innovated', 'for', 'Industry', 'Leaders.'];

@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import MarqueeStrip from '../components/MarqueeStrip';
 
-const ABOUT_IMAGE = '/__generating__/img_3e4e8357bae2.png';
+const ABOUT_IMAGE = 'https://media.base44.com/images/public/69bb88d987e87c84bc284bfc/68b3f5c81_generated_51fbb65d.png';
 
 const timeline = [
   { year: '2002', title: 'Entering the packaging world', desc: 'Started with a vision to become a diversified independent packaging supplier, driving quality and sustainability.' },

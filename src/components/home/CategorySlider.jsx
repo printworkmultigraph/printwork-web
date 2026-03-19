@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import HorizontalSlider from '../HorizontalSlider';
 
 const IMAGES = {
-  'Food Service': '/__generating__/img_0d27adfd160e.png',
-  'Food Processing': '/__generating__/img_98d4bae50a93.png',
-  'Agriculture': '/__generating__/img_6eb2d93c328b.png',
+  'Food Service': 'https://media.base44.com/images/public/69bb88d987e87c84bc284bfc/a6f90cc61_generated_7e7f4f66.png',
+  'Food Processing': 'https://media.base44.com/images/public/69bb88d987e87c84bc284bfc/6ca141c7f_generated_bf0be04d.png',
+  'Agriculture': 'https://media.base44.com/images/public/69bb88d987e87c84bc284bfc/0399efd28_generated_6c7b1ef5.png',
 };
 
 const categories = [
