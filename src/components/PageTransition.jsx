@@ -1,28 +1,68 @@
-import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 
+const CURTAIN_COLOR = '#152b1e';
+
+/**
+ * Barba.js-style page transition:
+ * On route change → green curtain slides UP from bottom covering screen,
+ * then slides UP off the top revealing new page.
+ */
 export default function PageTransition({ children }) {
   const location = useLocation();
+  const curtainRef = useRef(null);
+  const prevPath = useRef(location.pathname);
+
+  useEffect(() => {
+    if (prevPath.current === location.pathname) return;
+    prevPath.current = location.pathname;
+
+    const curtain = curtainRef.current;
+    if (!curtain) return;
+
+    // Phase 1: slide curtain UP from bottom (cover screen)
+    curtain.style.transition = 'none';
+    curtain.style.transform = 'translateY(100%)';
+    curtain.style.display = 'block';
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        curtain.style.transition = 'transform 0.55s cubic-bezier(0.76, 0, 0.24, 1)';
+        curtain.style.transform = 'translateY(0%)';
+
+        setTimeout(() => {
+          // Scroll to top
+          window.scrollTo(0, 0);
+
+          // Phase 2: slide curtain UP off screen (reveal new page)
+          curtain.style.transition = 'transform 0.65s cubic-bezier(0.76, 0, 0.24, 1)';
+          curtain.style.transform = 'translateY(-100%)';
+
+          setTimeout(() => {
+            curtain.style.display = 'none';
+            curtain.style.transform = 'translateY(100%)';
+          }, 700);
+        }, 600);
+      });
+    });
+  }, [location.pathname]);
 
   return (
-    <AnimatePresence mode="wait">
-      <motion.div
-        key={location.pathname}
-        initial={{ opacity: 0, y: 18 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -18 }}
-        transition={{ duration: 0.45, ease: [0.76, 0, 0.24, 1] }}
-      >
-        {children}
-        {/* Curtain overlay on enter */}
-        <motion.div
-          className="fixed inset-0 z-[8000] pointer-events-none"
-          style={{ backgroundColor: '#162d20', transformOrigin: 'top' }}
-          initial={{ scaleY: 1 }}
-          animate={{ scaleY: 0 }}
-          transition={{ duration: 0.65, ease: [0.76, 0, 0.24, 1] }}
-        />
-      </motion.div>
-    </AnimatePresence>
+    <>
+      {children}
+      {/* Curtain overlay */}
+      <div
+        ref={curtainRef}
+        style={{
+          position: 'fixed',
+          inset: 0,
+          backgroundColor: CURTAIN_COLOR,
+          zIndex: 8000,
+          transform: 'translateY(100%)',
+          display: 'none',
+          pointerEvents: 'none',
+        }}
+      />
+    </>
   );
 }
