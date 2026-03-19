@@ -4,6 +4,7 @@ import { queryClientInstance } from '@/lib/query-client'
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import PageTransition from './components/PageTransition';
+import CustomCursor from './components/CustomCursor';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import Home from './pages/Home';
@@ -45,6 +46,8 @@ const AuthenticatedApp = () => {
   }
 
   return (
+    <>
+    <CustomCursor />
     <PageTransition>
       <Routes>
         <Route path="/" element={<Navigate to="/Home" replace />} />
@@ -57,6 +60,7 @@ const AuthenticatedApp = () => {
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </PageTransition>
+    </>
   );
 };
 
