@@ -2,6 +2,8 @@ import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useInView } from 'framer-motion';
 
+const EASE = [0.76, 0, 0.24, 1];
+
 export default function ProductCard({ product, index = 0 }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-40px' });
@@ -14,15 +16,24 @@ export default function ProductCard({ product, index = 0 }) {
       transition={{ duration: 0.65, ease: [0.76, 0, 0.24, 1], delay: index * 0.07 }}
     >
       <Link to={`/ProductDetail?id=${product.id}`} className="group block">
-        {/* Image */}
+        {/* Image with clip-path reveal */}
         <div className="relative aspect-square bg-secondary rounded-2xl overflow-hidden mb-4">
-          <motion.img
-            src={product.image}
-            alt={product.name}
-            className="w-full h-full object-cover"
-            whileHover={{ scale: 1.06 }}
-            transition={{ duration: 0.65, ease: [0.76, 0, 0.24, 1] }}
-          />
+          <motion.div
+            className="absolute inset-0"
+            style={{ clipPath: 'inset(100% 0 0 0)' }}
+            animate={inView ? { clipPath: 'inset(0% 0 0 0)' } : {}}
+            transition={{ duration: 0.9, ease: EASE, delay: index * 0.06 }}
+          >
+            <motion.img
+              src={product.image}
+              alt={product.name}
+              className="w-full h-full object-cover"
+              style={{ scale: 1.1 }}
+              animate={inView ? { scale: 1 } : {}}
+              transition={{ duration: 0.9, ease: EASE, delay: index * 0.06 }}
+              whileHover={{ scale: 1.06 }}
+            />
+          </motion.div>
           {product.is_new && (
             <span className="absolute top-3 right-3 px-3 py-1 bg-navy-900 text-white text-[9px] font-jost font-bold uppercase tracking-wider rounded-full">
               New
