@@ -3,6 +3,7 @@ import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
+import PageTransition from './components/PageTransition';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import Home from './pages/Home';
@@ -44,16 +45,18 @@ const AuthenticatedApp = () => {
   }
 
   return (
-    <Routes>
-      <Route path="/" element={<Navigate to="/Home" replace />} />
-      <Route path="/Home" element={<Home />} />
-      <Route path="/Shop" element={<Shop />} />
-      <Route path="/ProductDetail" element={<ProductDetail />} />
-      <Route path="/Cart" element={<Cart />} />
-      <Route path="/About" element={<About />} />
-      <Route path="/Contact" element={<Contact />} />
-      <Route path="*" element={<PageNotFound />} />
-    </Routes>
+    <PageTransition>
+      <Routes>
+        <Route path="/" element={<Navigate to="/Home" replace />} />
+        <Route path="/Home" element={<Home />} />
+        <Route path="/Shop" element={<Shop />} />
+        <Route path="/ProductDetail" element={<ProductDetail />} />
+        <Route path="/Cart" element={<Cart />} />
+        <Route path="/About" element={<About />} />
+        <Route path="/Contact" element={<Contact />} />
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+    </PageTransition>
   );
 };
 
