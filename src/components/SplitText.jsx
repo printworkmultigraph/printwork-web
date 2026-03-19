@@ -4,16 +4,16 @@ import { motion, useInView } from 'framer-motion';
 const EASE = [0.76, 0, 0.24, 1];
 
 /**
- * Splits text into lines (by \n or array) and reveals each from overflow:hidden container.
- * Exactly like Yucca's split-text GSAP effect.
+ * Splits text into lines and reveals each from overflow:hidden container.
+ * Exactly like Yucca's GSAP split-text effect.
  */
-export function SplitLines({ lines, className = '', lineClassName = '', delay = 0, tag: Tag = 'h2' }) {
+export function SplitLines({ lines, className = '', lineClassName = '', delay = 0 }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-60px 0px' });
   const arr = Array.isArray(lines) ? lines : [lines];
 
   return (
-    <Tag ref={ref} className={className}>
+    <div ref={ref} className={className}>
       {arr.map((line, i) => (
         <span key={i} style={{ display: 'block', overflow: 'hidden' }}>
           <motion.span
@@ -27,19 +27,19 @@ export function SplitLines({ lines, className = '', lineClassName = '', delay = 
           </motion.span>
         </span>
       ))}
-    </Tag>
+    </div>
   );
 }
 
 /**
- * Single line reveal — for use inline in JSX
+ * Single line reveal
  */
-export function LineReveal({ children, delay = 0, className = '', as: Tag = 'div' }) {
+export function LineReveal({ children, delay = 0, className = '' }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-60px 0px' });
 
   return (
-    <Tag ref={ref} style={{ overflow: 'hidden', display: 'block' }} className={className}>
+    <div ref={ref} style={{ overflow: 'hidden', display: 'block' }} className={className}>
       <motion.span
         style={{ display: 'block' }}
         initial={{ y: '110%' }}
@@ -48,12 +48,12 @@ export function LineReveal({ children, delay = 0, className = '', as: Tag = 'div
       >
         {children}
       </motion.span>
-    </Tag>
+    </div>
   );
 }
 
 /**
- * Hero line reveal (no scroll trigger, fires on mount)
+ * Hero line reveal (fires on mount, no scroll trigger)
  */
 export function HeroLine({ children, delay = 0, className = '' }) {
   return (
