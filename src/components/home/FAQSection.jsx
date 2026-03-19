@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion';
+import { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import {
   Accordion,
   AccordionContent,
@@ -30,39 +31,42 @@ const faqs = [
 ];
 
 export default function FAQSection() {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: '-80px' });
+
   return (
-    <section className="py-24 bg-secondary">
+    <section ref={ref} className="py-24 bg-secondary">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
         <div className="max-w-3xl mx-auto">
-          <motion.div
-            className="text-center mb-12"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-3xl md:text-4xl font-display font-medium text-navy-900">
-              Frequently asked <span className="italic text-navy-500">questions</span>
-            </h2>
-          </motion.div>
+          <div className="text-center mb-14">
+            <div style={{ overflow: 'hidden' }}>
+              <motion.h2
+                className="text-3xl md:text-4xl lg:text-5xl font-display font-medium text-navy-900"
+                initial={{ y: '100%' }}
+                animate={inView ? { y: '0%' } : {}}
+                transition={{ duration: 0.75, ease: [0.76, 0, 0.24, 1] }}
+              >
+                Frequently asked <em className="font-light text-navy-500">questions</em>
+              </motion.h2>
+            </div>
+          </div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1], delay: 0.2 }}
           >
             <Accordion type="single" collapsible className="space-y-3">
               {faqs.map((faq, i) => (
                 <AccordionItem
                   key={i}
                   value={`faq-${i}`}
-                  className="bg-white rounded-2xl px-6 border-none shadow-sm"
+                  className="bg-white rounded-2xl px-6 border-none shadow-sm overflow-hidden"
                 >
-                  <AccordionTrigger className="text-left text-sm font-semibold text-navy-900 py-5 hover:no-underline">
+                  <AccordionTrigger className="text-left text-sm font-jost font-semibold text-navy-900 py-5 hover:no-underline">
                     {faq.q}
                   </AccordionTrigger>
-                  <AccordionContent className="text-sm text-navy-500 leading-relaxed pb-5">
+                  <AccordionContent className="text-sm font-jost text-navy-500 leading-relaxed pb-5">
                     {faq.a}
                   </AccordionContent>
                 </AccordionItem>

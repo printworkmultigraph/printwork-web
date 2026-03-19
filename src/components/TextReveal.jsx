@@ -2,40 +2,40 @@ import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 
 /**
- * Wraps text in an overflow-hidden container and slides it up on scroll.
- * Usage: <TextReveal as="h2" delay={0.1}>Your text</TextReveal>
+ * Wraps children in overflow:hidden and slides up on scroll into view.
+ * Usage: <TextReveal delay={0.1}><h2>Your text</h2></TextReveal>
  */
-export default function TextReveal({ children, as: Tag = 'div', className = '', delay = 0, once = true }) {
+export default function TextReveal({ children, className = '', delay = 0, once = true }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once, margin: '-60px 0px' });
 
   return (
     <div ref={ref} className={`overflow-hidden ${className}`}>
       <motion.div
-        initial={{ y: '105%', opacity: 0 }}
+        initial={{ y: '108%', opacity: 0 }}
         animate={inView ? { y: '0%', opacity: 1 } : {}}
         transition={{ duration: 0.75, ease: [0.76, 0, 0.24, 1], delay }}
       >
-        <Tag>{children}</Tag>
+        {children}
       </motion.div>
     </div>
   );
 }
 
 /**
- * Splits text by words and reveals each word with stagger
+ * Splits text by words and reveals each with stagger
  */
-export function WordReveal({ text, className = '', delay = 0, once = true, tag: Tag = 'span' }) {
+export function WordReveal({ text, className = '', delay = 0, once = true }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once, margin: '-60px 0px' });
   const words = text.split(' ');
 
   return (
-    <Tag ref={ref} className={className} style={{ display: 'flex', flexWrap: 'wrap', gap: '0.25em' }}>
+    <span ref={ref} className={`inline-flex flex-wrap gap-x-[0.28em] ${className}`}>
       {words.map((word, i) => (
-        <span key={i} style={{ overflow: 'hidden', display: 'inline-block' }}>
+        <span key={i} className="overflow-hidden inline-block">
           <motion.span
-            style={{ display: 'inline-block' }}
+            className="inline-block"
             initial={{ y: '110%', opacity: 0 }}
             animate={inView ? { y: '0%', opacity: 1 } : {}}
             transition={{
@@ -48,6 +48,6 @@ export function WordReveal({ text, className = '', delay = 0, once = true, tag: 
           </motion.span>
         </span>
       ))}
-    </Tag>
+    </span>
   );
 }
