@@ -1,39 +1,27 @@
-import { useState, useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { base44 } from '@/api/base44Client';
+import { products as allProducts } from '../../data/products';
 import ProductCard from '../ProductCard';
 import HorizontalSlider from '../HorizontalSlider';
-import { LineReveal, FadeUp } from '../SplitText';
-
-const EASE = [0.76, 0, 0.24, 1];
+import { LineReveal } from '../SplitText';
 
 export default function NewProducts() {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const newProducts = allProducts.filter(p => p.isNew).slice(0, 8);
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-80px' });
 
-  useEffect(() => {
-    const load = async () => {
-      const data = await base44.entities.Product.filter({ is_new: true }, '-created_date', 8);
-      setProducts(data);
-      setLoading(false);
-    };
-    load();
-  }, []);
-
   return (
-    <section ref={ref} className="py-24 bg-secondary">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
+    <section ref={ref} className="py-24 bg-white">
+      <div className="max-w-[1100px] mx-auto px-10 md:px-16 lg:px-24">
         <div className="flex items-end justify-between mb-12">
           <div>
             <LineReveal delay={0}>
-              <span className="text-[10px] font-jost text-navy-400 tracking-[0.3em] uppercase block mb-3">Just Arrived</span>
+              <span className="text-[10px] font-jost text-navy-400 tracking-[0.3em] uppercase block mb-3">Baru Hadir</span>
             </LineReveal>
             <LineReveal delay={0.1}>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-medium text-navy-900">
-                New <em className="font-light text-navy-400 not-italic">Products</em>
+                Produk <em className="font-light text-navy-400 not-italic">Terbaru</em>
               </h2>
             </LineReveal>
           </div>
@@ -46,30 +34,18 @@ export default function NewProducts() {
               to="/Shop"
               className="hidden md:inline-flex items-center gap-2 px-6 py-3 bg-navy-900 text-white text-sm font-jost font-semibold rounded-full hover:bg-navy-700 transition-colors"
             >
-              Shop now
+              Lihat Semua
             </Link>
           </motion.div>
         </div>
 
-        {loading ? (
-          <div className="flex gap-5 overflow-hidden">
-            {[1, 2, 3, 4].map(i => (
-              <div key={i} className="flex-shrink-0 w-[260px]">
-                <div className="aspect-square bg-white rounded-2xl animate-pulse mb-4" />
-                <div className="h-3 bg-white rounded animate-pulse w-2/3 mb-2" />
-                <div className="h-3 bg-white rounded animate-pulse w-1/2" />
-              </div>
-            ))}
-          </div>
-        ) : (
-          <HorizontalSlider>
-            {products.map((product, i) => (
-              <div key={product.id} className="flex-shrink-0 w-[240px] sm:w-[260px]">
-                <ProductCard product={product} index={i} />
-              </div>
-            ))}
-          </HorizontalSlider>
-        )}
+        <HorizontalSlider>
+          {newProducts.map((product, i) => (
+            <div key={product.id} className="flex-shrink-0 w-[240px] sm:w-[260px]">
+              <ProductCard product={product} index={i} />
+            </div>
+          ))}
+        </HorizontalSlider>
       </div>
     </section>
   );

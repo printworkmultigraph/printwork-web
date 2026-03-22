@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Jost:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Jost:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -8,6 +8,13 @@
   :root {
     --background: 0 0% 100%;
     --foreground: 220 20% 10%;
+    --navy-900: 220 40% 13%;
+    --navy-500: 220 15% 35%;
+    --navy-400: 220 10% 45%;
+    --navy-300: 220 10% 65%;
+    --navy-200: 220 10% 85%;
+    --navy-100: 220 10% 95%;
+    --navy-50: 220 10% 98%;
     --card: 0 0% 100%;
     --card-foreground: 220 20% 10%;
     --popover: 0 0% 100%;
@@ -33,6 +40,7 @@
     --radius: 0.5rem;
     --font-jost: 'Jost', sans-serif;
     --font-display: 'Cormorant Garamond', serif;
+    --font-syne: 'Syne', sans-serif;
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
@@ -83,24 +91,34 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    font-size: 13px; /* Replicating 80% zoom look at 100% zoom */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
   body {
-    @apply bg-background text-foreground font-jost;
+    @apply bg-background text-foreground font-jost leading-relaxed tracking-normal;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply tracking-tight;
   }
 }
 
-/* Custom scrollbar */
+/* High-end Minimalist Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 4px; /* Super thin */
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--muted-foreground) / 0.3);
-  border-radius: 3px;
+  background: hsl(var(--navy) / 0.15);
+  border-radius: 10px;
+  transition: background 0.3s;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--muted-foreground) / 0.5);
+  background: hsl(var(--navy) / 0.35);
 }
 
 /* Smooth scroll */
@@ -108,11 +126,8 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Hide cursor globally when custom cursor active — set by JS */
-* { cursor: none !important; }
-
+/* Restore cursor on touch devices */
 @media (hover: none) {
-  /* Restore cursor on touch devices */
   * { cursor: auto !important; }
 }
 

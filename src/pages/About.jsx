@@ -3,23 +3,23 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import MarqueeStrip from '../components/MarqueeStrip';
 
-const ABOUT_IMAGE = 'https://media.base44.com/images/public/69bb88d987e87c84bc284bfc/68b3f5c81_generated_51fbb65d.png';
+const ABOUT_IMAGE = '/images/service_manufacturing.png';
 
 const timeline = [
-  { year: '2002', title: 'Entering the packaging world', desc: 'Started with a vision to become a diversified independent packaging supplier, driving quality and sustainability.' },
-  { year: '2008', title: 'Expanding global partners', desc: 'Refined processes with technology and automation to accelerate high-volume delivery to meet global standards.' },
-  { year: '2015', title: 'Partnership milestones', desc: 'Expanded automation within agriculture and delivered products adhering to the highest global standards.' },
-  { year: '2020', title: 'Rapid growth period', desc: 'As demand surged, more businesses turned to us for scalable solutions to preserve and protect products in transit.' },
-  { year: '2025', title: 'Trusted packaging supplier', desc: 'Upholding a reputation for quality and reliability, supplying packaging to some of the world\'s biggest brands.' },
+  { year: '2010', title: 'Awal mula perjalanan', desc: 'PT Printwork Indonesia didirikan dengan visi menjadi penyedia kemasan makanan custom terdepan di Indonesia.' },
+  { year: '2014', title: 'Ekspansi kapasitas produksi', desc: 'Menambah lini produksi cetak dan finishing untuk memenuhi permintaan pasar yang terus berkembang.' },
+  { year: '2018', title: 'Sertifikasi kualitas', desc: 'Meraih sertifikasi ISO 9001:2015 dan FSSC 22000 untuk menjamin standar kualitas dan keamanan pangan.' },
+  { year: '2022', title: 'Inovasi material', desc: 'Menghadirkan material Food Grade (Foopak) dan Paper Metalized untuk jawab kebutuhan kemasan modern.' },
+  { year: '2025', title: 'Mitra terpercaya', desc: 'Melayani ribuan pelaku usaha F&B dari skala UMKM hingga brand nasional di seluruh Indonesia.' },
 ];
 
-const values = ['Quality Assurance', 'Efficiency', 'Customer Focus', 'Safety', 'Sustainability', 'Collaboration', 'Integrity', 'Compliance', 'Innovation', 'Reliability'];
+const values = ['Kualitas Terjamin', 'Efisiensi Produksi', 'Fokus Pelanggan', 'Keamanan Pangan', 'Ramah Lingkungan', 'Kolaborasi', 'Integritas', 'Inovasi', 'Keandalan', 'Sertifikasi'];
 
 const team = [
-  { name: 'Dirk Theart', role: 'Managing Director' },
-  { name: 'Reynardt Bester', role: 'General Manager' },
-  { name: 'Byron Clarke', role: 'Operations Manager' },
-  { name: 'Keith Hesketh', role: 'Marketing Manager' },
+  { name: 'Direktur Utama', role: 'Pengelolaan strategis perusahaan' },
+  { name: 'Manajer Produksi', role: 'Operasional & kontrol kualitas' },
+  { name: 'Manajer Pemasaran', role: 'Pengembangan pasar & klien' },
+  { name: 'Tim Desain', role: 'Desain kemasan custom' },
 ];
 
 export default function About() {
@@ -31,7 +31,7 @@ export default function About() {
         <section className="relative h-[60vh] md:h-[70vh] overflow-hidden">
           <motion.img
             src={ABOUT_IMAGE}
-            alt="About Yucca"
+            alt="Tentang PT Printwork Indonesia"
             className="w-full h-full object-cover"
             initial={{ scale: 1.1 }}
             animate={{ scale: 1 }}
@@ -45,14 +45,14 @@ export default function About() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.3 }}
             >
-              Adaptable and<br /><span className="italic">Resilient</span>
+              Terpercaya &<br /><span className="italic">Berkualitas</span>
             </motion.h1>
           </div>
         </section>
 
         {/* Intro */}
         <section className="py-20 lg:py-28">
-          <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
+          <div className="max-w-[1100px] mx-auto px-10 md:px-16 lg:px-24">
             <div className="max-w-3xl">
               <motion.p
                 className="text-lg md:text-xl text-navy-600 leading-relaxed"
@@ -61,7 +61,7 @@ export default function About() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
               >
-                Packaging is universal, and we use it every day. No matter who or where we are, exceptional food is something we all appreciate. To buy, preserve, and transport product that maintains its quality, appearance and taste, we need high-performance packaging in a range of designs and materials.
+                PT Printwork Indonesia adalah perusahaan spesialis kemasan makanan custom yang telah melayani ribuan pelaku usaha F&B di seluruh Indonesia. Kami menggabungkan teknologi cetak modern dengan material berkualitas tinggi untuk menghasilkan kemasan yang tidak hanya melindungi produk, tetapi juga memperkuat identitas brand Anda.
               </motion.p>
             </div>
           </div>
@@ -69,14 +69,14 @@ export default function About() {
 
         {/* Timeline */}
         <section className="py-20 bg-secondary">
-          <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
+          <div className="max-w-[1100px] mx-auto px-10 md:px-16 lg:px-24">
             <motion.h2
               className="text-3xl md:text-4xl lg:text-5xl font-display font-medium text-navy-900 mb-16"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              The <span className="italic text-navy-500">Journey</span>
+              Perjalanan <span className="italic text-navy-500">Kami</span>
             </motion.h2>
 
             <div className="relative">
@@ -109,7 +109,7 @@ export default function About() {
 
         {/* Mission/Vision */}
         <section className="py-20 lg:py-28">
-          <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
+          <div className="max-w-[1100px] mx-auto px-10 md:px-16 lg:px-24">
             <motion.div
               className="text-center mb-16"
               initial={{ opacity: 0, y: 30 }}
@@ -117,7 +117,7 @@ export default function About() {
               viewport={{ once: true }}
             >
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-medium text-navy-900">
-                Committed to <span className="italic text-navy-500">Excellence</span>
+                Berkomitmen pada <span className="italic text-navy-500">Keunggulan</span>
               </h2>
             </motion.div>
             <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
@@ -128,9 +128,9 @@ export default function About() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 }}
               >
-                <p className="text-navy-400 text-xs tracking-[0.3em] uppercase mb-4">Our Mission</p>
+                <p className="text-navy-400 text-xs tracking-[0.3em] uppercase mb-4">Misi Kami</p>
                 <p className="text-navy-700 leading-relaxed">
-                  We provide world-class, compliant packaging from trusted global partners to food service, food processing, and agricultural businesses across the globe.
+                  Menyediakan kemasan makanan custom berkualitas tinggi dengan harga terjangkau, mendukung pelaku usaha F&B dari skala UMKM hingga korporasi besar di seluruh Indonesia.
                 </p>
               </motion.div>
               <motion.div
@@ -140,9 +140,9 @@ export default function About() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
               >
-                <p className="text-white/40 text-xs tracking-[0.3em] uppercase mb-4">Our Vision</p>
+                <p className="text-white/40 text-xs tracking-[0.3em] uppercase mb-4">Visi Kami</p>
                 <p className="text-white/80 leading-relaxed">
-                  To be the trusted, industry-leading packaging supplier, known for ethical practices, reliable supply and dedication to sustainable innovation.
+                  Menjadi penyedia kemasan makanan terpercaya dan terdepan di Indonesia, dikenal karena kualitas cetak premium, pelayanan cepat, dan komitmen pada inovasi berkelanjutan.
                 </p>
               </motion.div>
             </div>
@@ -151,14 +151,14 @@ export default function About() {
 
         {/* Team */}
         <section className="py-20 bg-secondary">
-          <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
+          <div className="max-w-[1100px] mx-auto px-10 md:px-16 lg:px-24">
             <motion.h2
               className="text-3xl md:text-4xl lg:text-5xl font-display font-medium text-navy-900 mb-12 text-center"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              Meet the <span className="italic text-navy-500">Team</span>
+              Tim <span className="italic text-navy-500">Kami</span>
             </motion.h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
               {team.map((member, i) => (

@@ -4,7 +4,6 @@ import { queryClientInstance } from '@/lib/query-client'
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import PageTransition from './components/PageTransition';
-import CustomCursor from './components/CustomCursor';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import Home from './pages/Home';
@@ -13,6 +12,12 @@ import ProductDetail from './pages/ProductDetail';
 import Cart from './pages/Cart';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsConditions from './pages/TermsConditions';
+import FoodProcessing from './pages/FoodProcessing';
+import Portfolio from './pages/Portfolio';
+import Services from './pages/Services';
+import Admin from './pages/Admin';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -26,8 +31,8 @@ const AuthenticatedApp = () => {
               <div className="w-4 h-4 bg-white/60 rounded-sm" />
             </div>
             <div>
-              <span className="text-white text-xl font-bold tracking-tight">YUCCA</span>
-              <span className="text-white/40 text-[10px] ml-1 tracking-[0.2em] uppercase">Packaging</span>
+              <span className="text-white text-xl font-bold tracking-tight">PRINTWORK</span>
+              <span className="text-white/40 text-[10px] ml-1 tracking-[0.2em] uppercase">Indonesia</span>
             </div>
           </div>
           <div className="w-8 h-8 border-2 border-white/20 border-t-white/80 rounded-full animate-spin" />
@@ -46,8 +51,6 @@ const AuthenticatedApp = () => {
   }
 
   return (
-    <>
-    <CustomCursor />
     <PageTransition>
       <Routes>
         <Route path="/" element={<Navigate to="/Home" replace />} />
@@ -57,10 +60,15 @@ const AuthenticatedApp = () => {
         <Route path="/Cart" element={<Cart />} />
         <Route path="/About" element={<About />} />
         <Route path="/Contact" element={<Contact />} />
+        <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
+        <Route path="/TermsConditions" element={<TermsConditions />} />
+        <Route path="/FoodProcessing" element={<FoodProcessing />} />
+        <Route path="/Portfolio" element={<Portfolio />} />
+        <Route path="/Services" element={<Services />} />
+        <Route path="/Admin" element={<Admin />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </PageTransition>
-    </>
   );
 };
 

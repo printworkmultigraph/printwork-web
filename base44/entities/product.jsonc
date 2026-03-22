@@ -1,0 +1,68 @@
+{
+  "name": "Product",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "Product Name"
+    },
+    "description": {
+      "type": "string",
+      "title": "Description"
+    },
+    "price": {
+      "type": "number",
+      "title": "Price"
+    },
+    "category": {
+      "type": "string",
+      "title": "Category",
+      "enum": [
+        "Coffee",
+        "Smoothies",
+        "Deli",
+        "Takeout",
+        "Cutlery",
+        "Bags",
+        "Extras"
+      ]
+    },
+    "image": {
+      "type": "string",
+      "title": "Image URL"
+    },
+    "sizes": {
+      "type": "array",
+      "title": "Available Sizes",
+      "items": {
+        "type": "string"
+      }
+    },
+    "material": {
+      "type": "string",
+      "title": "Material",
+      "enum": [
+        "PET",
+        "Kraft Paper",
+        "Bagasse",
+        "Bamboo",
+        "Plastic",
+        "Paper Pulp"
+      ]
+    },
+    "is_new": {
+      "type": "boolean",
+      "title": "Is New Product"
+    },
+    "in_stock": {
+      "type": "boolean",
+      "title": "In Stock"
+    }
+  },
+  "required": [
+    "name",
+    "price",
+    "category",
+    "image"
+  ]
+}

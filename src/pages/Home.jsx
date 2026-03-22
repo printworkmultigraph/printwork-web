@@ -9,8 +9,10 @@ import NewProducts from '../components/home/NewProducts';
 import MissionSection from '../components/home/MissionSection';
 import CustomSolutionsBanner from '../components/home/CustomSolutionsBanner';
 import FAQSection from '../components/home/FAQSection';
+import InfiniteTextMarquee from '../components/InfiniteTextMarquee';
+import LogoMarquee from '../components/home/LogoMarquee';
 
-const marqueeItems = ['Yucca Rewards', 'Direct (B2B)', 'Quality', 'Branding', 'Custom Packaging', 'Sustainable', 'Innovation', 'Partnerships'];
+const marqueeItems = ['Printwork Indonesia', 'Custom Packaging', 'Food Grade', 'Eco-Kraft', 'ISO 9001:2015', 'FSSC 22000', 'Min. 500 Pcs', 'Cetak Premium'];
 
 export default function Home() {
   const [loaded, setLoaded] = useState(false);
@@ -24,12 +26,12 @@ export default function Home() {
         <main>
           <HeroSection />
           <MarqueeStrip items={marqueeItems} />
-          <CategorySlider />
           <NewProducts />
           <MissionSection />
           <MarqueeStrip items={marqueeItems} dark />
           <CustomSolutionsBanner />
           <FAQSection />
+          <LogoMarquee speed={40} />
         </main>
         <Footer />
       </div>

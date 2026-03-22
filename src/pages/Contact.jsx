@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Send, MapPin, Phone, Mail, Check } from 'lucide-react';
+import { Send, MapPin, Phone, Mail, Check, MessageCircle } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
@@ -12,7 +12,6 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSending(true);
-    // Simulate send
     await new Promise(r => setTimeout(r, 1500));
     setSent(true);
     setSending(false);
@@ -22,7 +21,7 @@ export default function Contact() {
     <>
       <Navbar />
       <main className="pt-28 pb-24 min-h-screen">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
+        <div className="max-w-[1100px] mx-auto px-10 md:px-16 lg:px-24">
           <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
             {/* Left */}
             <motion.div
@@ -30,12 +29,12 @@ export default function Contact() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <p className="text-navy-400 text-xs tracking-[0.3em] uppercase mb-4">Get in touch</p>
+              <p className="text-navy-400 text-xs tracking-[0.3em] uppercase mb-4">Hubungi Kami</p>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-medium text-navy-900 mb-6">
-                Let's work<br /><span className="italic text-navy-500">together.</span>
+                Mari Bekerja<br /><span className="italic text-navy-500">Sama.</span>
               </h1>
               <p className="text-navy-500 leading-relaxed mb-12 max-w-md">
-                With your vision and our skills, we can reshape the future of packaging. Tell us about your project and we'll get back to you within 24 hours.
+                Dengan visi Anda dan keahlian kami, kami bisa mewujudkan kemasan terbaik untuk bisnis Anda. Ceritakan kebutuhan Anda dan kami akan merespons dalam waktu 24 jam.
               </p>
 
               <div className="space-y-6">
@@ -44,8 +43,8 @@ export default function Contact() {
                     <MapPin className="w-4 h-4 text-navy-600" />
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-navy-900">Address</p>
-                    <p className="text-sm text-navy-500">Paarl, Western Cape, South Africa</p>
+                    <p className="text-sm font-semibold text-navy-900">Alamat</p>
+                    <p className="text-sm text-navy-500">Jl. Cempaka Putih Timur 17 Komp. Taman Lagura Indah No. 24, Cempaka Putih, Jakarta 10510</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
@@ -53,8 +52,8 @@ export default function Contact() {
                     <Phone className="w-4 h-4 text-navy-600" />
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-navy-900">Phone</p>
-                    <p className="text-sm text-navy-500">+27 (0) 21 863 0000</p>
+                    <p className="text-sm font-semibold text-navy-900">Telepon / WhatsApp</p>
+                    <p className="text-sm text-navy-500">+62 21 4204 170 / +62 811-1300-0966</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
@@ -63,10 +62,21 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="text-sm font-semibold text-navy-900">Email</p>
-                    <p className="text-sm text-navy-500">info@yucca.co.za</p>
+                    <p className="text-sm text-navy-500">info@printwork.co.id</p>
                   </div>
                 </div>
               </div>
+
+              {/* WhatsApp CTA */}
+              <a
+                href="https://wa.me/6281113000966?text=Halo%20Printwork,%20saya%20ingin%20konsultasi%20tentang%20kemasan%20custom."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 mt-10 px-8 py-4 bg-navy-900 text-white text-sm font-semibold tracking-wide rounded-full hover:bg-navy-700 transition-colors"
+              >
+                <MessageCircle className="w-4 h-4" />
+                Chat via WhatsApp
+              </a>
             </motion.div>
 
             {/* Right — form */}
@@ -81,23 +91,23 @@ export default function Contact() {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                 >
-                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6">
-                    <Check className="w-8 h-8 text-green-600" />
+                  <div className="w-16 h-16 bg-[#e8f0fe] rounded-full flex items-center justify-center mb-6">
+                    <Check className="w-8 h-8 text-navy-700" />
                   </div>
-                  <h2 className="text-2xl font-display font-medium text-navy-900 mb-3">Message Sent!</h2>
-                  <p className="text-navy-500 max-w-sm">Thank you for getting in touch. We'll respond within 24 hours.</p>
+                  <h2 className="text-2xl font-display font-medium text-navy-900 mb-3">Pesan Terkirim!</h2>
+                  <p className="text-navy-500 max-w-sm">Terima kasih telah menghubungi kami. Kami akan merespons dalam waktu 24 jam.</p>
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <div>
-                    <label className="text-xs font-semibold text-navy-500 uppercase tracking-wider mb-2 block">Name</label>
+                    <label className="text-xs font-semibold text-navy-500 uppercase tracking-wider mb-2 block">Nama</label>
                     <input
                       required
                       type="text"
                       value={form.name}
                       onChange={e => setForm({...form, name: e.target.value})}
-                      className="w-full px-5 py-3.5 bg-secondary rounded-xl text-sm text-navy-900 placeholder:text-navy-300 focus:outline-none focus:ring-2 focus:ring-navy-900/10"
-                      placeholder="Your full name"
+                      className="w-full px-5 py-4 bg-secondary rounded-xl text-base text-navy-900 placeholder:text-navy-300 focus:outline-none focus:ring-2 focus:ring-navy-900/10"
+                      placeholder="Nama lengkap Anda"
                     />
                   </div>
                   <div>
@@ -107,29 +117,29 @@ export default function Contact() {
                       type="email"
                       value={form.email}
                       onChange={e => setForm({...form, email: e.target.value})}
-                      className="w-full px-5 py-3.5 bg-secondary rounded-xl text-sm text-navy-900 placeholder:text-navy-300 focus:outline-none focus:ring-2 focus:ring-navy-900/10"
-                      placeholder="you@company.com"
+                      className="w-full px-5 py-4 bg-secondary rounded-xl text-base text-navy-900 placeholder:text-navy-300 focus:outline-none focus:ring-2 focus:ring-navy-900/10"
+                      placeholder="email@perusahaan.com"
                     />
                   </div>
                   <div>
-                    <label className="text-xs font-semibold text-navy-500 uppercase tracking-wider mb-2 block">Company</label>
+                    <label className="text-xs font-semibold text-navy-500 uppercase tracking-wider mb-2 block">Nama Usaha</label>
                     <input
                       type="text"
                       value={form.company}
                       onChange={e => setForm({...form, company: e.target.value})}
-                      className="w-full px-5 py-3.5 bg-secondary rounded-xl text-sm text-navy-900 placeholder:text-navy-300 focus:outline-none focus:ring-2 focus:ring-navy-900/10"
-                      placeholder="Your company name"
+                      className="w-full px-5 py-4 bg-secondary rounded-xl text-base text-navy-900 placeholder:text-navy-300 focus:outline-none focus:ring-2 focus:ring-navy-900/10"
+                      placeholder="Nama brand/usaha Anda"
                     />
                   </div>
                   <div>
-                    <label className="text-xs font-semibold text-navy-500 uppercase tracking-wider mb-2 block">Message</label>
+                    <label className="text-xs font-semibold text-navy-500 uppercase tracking-wider mb-2 block">Pesan</label>
                     <textarea
                       required
                       rows={5}
                       value={form.message}
                       onChange={e => setForm({...form, message: e.target.value})}
-                      className="w-full px-5 py-3.5 bg-secondary rounded-xl text-sm text-navy-900 placeholder:text-navy-300 focus:outline-none focus:ring-2 focus:ring-navy-900/10 resize-none"
-                      placeholder="Tell us about your project..."
+                      className="w-full px-5 py-4 bg-secondary rounded-xl text-base text-navy-900 placeholder:text-navy-300 focus:outline-none focus:ring-2 focus:ring-navy-900/10 resize-none"
+                      placeholder="Ceritakan kebutuhan kemasan Anda..."
                     />
                   </div>
                   <button
@@ -142,7 +152,7 @@ export default function Contact() {
                     ) : (
                       <>
                         <Send className="w-4 h-4" />
-                        Send Message
+                        Kirim Pesan
                       </>
                     )}
                   </button>

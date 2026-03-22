@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// Cycling packaging product images (tight crop, transparent bg style)
 const LOADER_IMAGES = [
-  'https://images.unsplash.com/photo-1585237017125-24baf8d7406f?w=300&q=90&fit=crop',
-  'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=300&q=90&fit=crop',
-  'https://images.unsplash.com/photo-1607344645866-009c320b63e0?w=300&q=90&fit=crop',
-  'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=300&q=90&fit=crop',
-  'https://images.unsplash.com/photo-1605600659908-0ef719419d41?w=300&q=90&fit=crop',
+  '/images/lunch box eco-kraft 1.jpeg',
+  '/images/food pail eco-kraft.jpeg',
+  '/images/dus fried chicken eco-kraft 275 gr.jpeg',
+  '/images/standing pouch paper metalized.jpeg',
+  '/images/food tray eco kraft.jpeg',
 ];
 
 export default function LoadingScreen({ onComplete }) {
@@ -15,17 +14,15 @@ export default function LoadingScreen({ onComplete }) {
   const [exiting, setExiting] = useState(false);
 
   useEffect(() => {
-    // Fast cycle through images
     const imgTimer = setInterval(() => {
       setImgIndex(i => (i + 1) % LOADER_IMAGES.length);
-    }, 300);
+    }, 200);
 
-    // Start exit after images have cycled
     const doneTimer = setTimeout(() => {
       clearInterval(imgTimer);
       setExiting(true);
-      setTimeout(() => onComplete?.(), 850);
-    }, 2200);
+      setTimeout(() => onComplete?.(), 550);
+    }, 1600);
 
     return () => {
       clearInterval(imgTimer);
@@ -39,24 +36,22 @@ export default function LoadingScreen({ onComplete }) {
         <motion.div
           key="loader"
           className="fixed inset-0 z-[9999] flex flex-col items-center justify-center"
-          style={{ backgroundColor: '#152b1e' }}
+          style={{ backgroundColor: '#0D1B3E' }}
           exit={{ y: '-100%' }}
-          transition={{ duration: 0.85, ease: [0.76, 0, 0.24, 1] }}
+          transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] }}
         >
           {/* Logo */}
           <motion.div
-            className="flex items-center gap-3 mb-10"
+            className="flex items-center mb-10"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, ease: [0.76, 0, 0.24, 1] }}
           >
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-              <path d="M6 26L26 6M26 6H10M26 6V22" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-            <div>
-              <div className="text-white text-lg font-jost font-bold tracking-[0.25em] uppercase leading-none">Yucca</div>
-              <div className="text-white/40 text-[9px] font-jost tracking-[0.3em] uppercase mt-0.5">Packaging</div>
-            </div>
+            <img 
+              src="/images/new_logo.png" 
+              alt="Printwork Logo" 
+              className="h-12 w-auto object-contain brightness-0 invert"
+            />
           </motion.div>
 
           {/* Cycling product image */}
@@ -75,7 +70,7 @@ export default function LoadingScreen({ onComplete }) {
             </AnimatePresence>
           </div>
 
-          {/* Pulsing oval dot — exactly like Yucca */}
+          {/* Pulsing oval dot */}
           <motion.div
             style={{
               width: 28,
@@ -92,11 +87,10 @@ export default function LoadingScreen({ onComplete }) {
           />
         </motion.div>
       ) : (
-        /* Green curtain slides UP to reveal page */
         <motion.div
           key="curtain-exit"
           className="fixed inset-0 z-[9999]"
-          style={{ backgroundColor: '#152b1e', transformOrigin: 'top' }}
+          style={{ backgroundColor: '#0D1B3E', transformOrigin: 'top' }}
           initial={{ y: 0 }}
           animate={{ y: '-100%' }}
           transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}

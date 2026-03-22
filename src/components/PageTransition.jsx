@@ -1,11 +1,11 @@
 import { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 
-const CURTAIN_COLOR = '#152b1e';
+const CURTAIN_COLOR = '#0D1B3E';
 
 /**
  * Barba.js-style page transition:
- * On route change → green curtain slides UP from bottom covering screen,
+ * On route change → navy curtain slides UP from bottom covering screen,
  * then slides UP off the top revealing new page.
  */
 export default function PageTransition({ children }) {
@@ -27,7 +27,7 @@ export default function PageTransition({ children }) {
 
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        curtain.style.transition = 'transform 0.55s cubic-bezier(0.76, 0, 0.24, 1)';
+        curtain.style.transition = 'transform 0.35s cubic-bezier(0.76, 0, 0.24, 1)';
         curtain.style.transform = 'translateY(0%)';
 
         setTimeout(() => {
@@ -35,14 +35,14 @@ export default function PageTransition({ children }) {
           window.scrollTo(0, 0);
 
           // Phase 2: slide curtain UP off screen (reveal new page)
-          curtain.style.transition = 'transform 0.65s cubic-bezier(0.76, 0, 0.24, 1)';
+          curtain.style.transition = 'transform 0.4s cubic-bezier(0.76, 0, 0.24, 1)';
           curtain.style.transform = 'translateY(-100%)';
 
           setTimeout(() => {
             curtain.style.display = 'none';
             curtain.style.transform = 'translateY(100%)';
-          }, 700);
-        }, 600);
+          }, 450);
+        }, 400);
       });
     });
   }, [location.pathname]);

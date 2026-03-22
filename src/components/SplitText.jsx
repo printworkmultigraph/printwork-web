@@ -71,6 +71,34 @@ export function HeroLine({ children, delay = 0, className = '' }) {
 }
 
 /**
+ * Splits text into individual characters and staggers them.
+ */
+export function SplitCharacters({ children, delay = 0, className = '' }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: '-60px 0px' });
+  
+  const text = typeof children === 'string' ? children : '';
+  const characters = text.split('');
+
+  return (
+    <div ref={ref} className={className}>
+      {characters.map((char, i) => (
+        <span key={i} style={{ display: 'inline-block', overflow: 'hidden' }}>
+          <motion.span
+            style={{ display: 'inline-block', whiteSpace: 'pre' }}
+            initial={{ y: '110%' }}
+            animate={inView ? { y: '0%' } : {}}
+            transition={{ duration: 0.6, ease: EASE, delay: delay + i * 0.02 }}
+          >
+            {char}
+          </motion.span>
+        </span>
+      ))}
+    </div>
+  );
+}
+
+/**
  * Fade + slide up for body text / small elements
  */
 export function FadeUp({ children, delay = 0, className = '' }) {

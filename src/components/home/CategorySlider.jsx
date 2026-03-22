@@ -2,35 +2,37 @@ import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import HorizontalSlider from '../HorizontalSlider';
-import { LineReveal, FadeUp } from '../SplitText';
-import { ImageReveal } from '../ClipReveal';
+import { LineReveal, FadeUp, SplitCharacters } from '../SplitText';
+import TiltCard from '../TiltCard';
+import MagneticButton from '../MagneticButton';
+import LiquidImage from '../LiquidImage';
 
 const EASE = [0.76, 0, 0.24, 1];
 
 const categories = [
   {
-    title: 'Food Service',
-    description: 'Cups, tubs, bowls, and more for takeout, catering, and deli food.',
-    path: '/Shop?category=Coffee',
-    image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80',
+    title: 'Lunch Box',
+    description: 'Custom lunch box dengan model selip dan yamie. Material Eco-Kraft & Food Grade.',
+    path: '/Shop?category=Lunch Box',
+    image: '/images/lunch box eco-kraft 1.png',
   },
   {
-    title: 'Food Processing',
-    description: 'Keep meat, poultry, and seafood fresh with packaging that minimises waste.',
-    path: '/Shop?category=Deli',
-    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80',
+    title: 'Food Pail',
+    description: 'Food pail model tekuk untuk rice box dan nasi kotak. Tahan minyak dan air.',
+    path: '/Shop?category=Food Pail',
+    image: '/images/food pail eco-kraft.png',
   },
   {
-    title: 'Agriculture',
-    description: 'Ensure produce remains crisp and fresh from harvest to store shelves.',
-    path: '/Shop?category=Extras',
-    image: 'https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?w=800&q=80',
+    title: 'Fried Chicken',
+    description: 'Dus ayam goreng, ayam geprek, dan fried chicken. Branding custom untuk bisnis Anda.',
+    path: '/Shop?category=Fried Chicken',
+    image: '/images/dus fried chicken eco-kraft 275 gr.png',
   },
   {
-    title: 'Custom Solutions',
-    description: 'Bespoke branding and custom-designed packaging for your unique vision.',
-    path: '/Contact',
-    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80',
+    title: 'Kantong Kertas',
+    description: 'Kertas nasi, food wrapping, standing pouch, dan sachet metalized custom cetak.',
+    path: '/Shop?category=Kantong Kertas',
+    image: '/images/standing pouch paper metalized.png',
   },
 ];
 
@@ -40,39 +42,40 @@ function CategoryCard({ cat, index }) {
 
   return (
     <Link ref={ref} to={cat.path} className="flex-shrink-0 w-[290px] sm:w-[350px] lg:w-[390px] group block">
-      {/* Image with clip-path wipe */}
-      <div className="relative aspect-[3/4] rounded-2xl overflow-hidden mb-5">
-        <motion.div
-          className="absolute inset-0"
-          style={{ clipPath: 'inset(100% 0 0 0)' }}
-          animate={inView ? { clipPath: 'inset(0% 0 0 0)' } : {}}
-          transition={{ duration: 1.0, ease: EASE, delay: index * 0.1 }}
-        >
-          <motion.img
-            src={cat.image}
-            alt={cat.title}
-            className="w-full h-full object-cover"
-            style={{ scale: 1.1 }}
-            animate={inView ? { scale: 1 } : {}}
-            transition={{ duration: 1.0, ease: EASE, delay: index * 0.1 }}
-            whileHover={{ scale: 1.06 }}
+      <TiltCard>
+        <div className="relative aspect-[3/4] rounded-3xl overflow-hidden mb-5 bg-secondary shadow-xl shadow-navy-900/5 group-hover:shadow-2xl transition-shadow duration-500">
+          <LiquidImage 
+            src={cat.image} 
+            alt={cat.title} 
+            className="absolute inset-0 w-full h-full"
+            delay={index * 0.1}
           />
-        </motion.div>
-        <div className="absolute inset-0 bg-gradient-to-t from-navy-900/55 via-transparent to-transparent pointer-events-none" />
-        <div className="absolute bottom-5 left-5 right-5">
-          <span className="text-white text-xl font-display font-medium block">{cat.title}</span>
-          <motion.span
-            className="text-white/70 text-xs font-jost tracking-wide block mt-1"
-            initial={{ opacity: 0, y: 6 }}
-            whileHover={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            Explore →
-          </motion.span>
+          
+          {/* Enhanced Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-navy-900/80 via-navy-900/20 to-transparent opacity-70 group-hover:opacity-100 transition-opacity duration-500" />
+          
+          <div className="absolute inset-0 p-8 flex flex-col justify-end">
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={inView ? { y: 0, opacity: 1 } : {}}
+              transition={{ duration: 0.6, delay: index * 0.1 + 0.3 }}
+            >
+              <SplitCharacters delay={index * 0.1 + 0.5} className="text-white text-3xl font-display font-medium block leading-tight mb-2">
+                {cat.title}
+              </SplitCharacters>
+              <div className="h-0.5 w-10 bg-white/40 mb-4 group-hover:w-16 transition-all duration-500" />
+              
+              <MagneticButton strength={15}>
+                <div className="flex items-center gap-2 text-white/70 text-xs font-jost font-semibold uppercase tracking-widest group-hover:text-white transition-colors">
+                  Lihat Koleksi <span className="text-lg">→</span>
+                </div>
+              </MagneticButton>
+            </motion.div>
+          </div>
         </div>
-      </div>
-      <FadeUp delay={index * 0.1 + 0.3}>
-        <p className="text-sm font-jost text-navy-400 leading-relaxed px-1">{cat.description}</p>
+      </TiltCard>
+      <FadeUp delay={index * 0.08 + 0.2}>
+        <p className="text-sm font-jost text-navy-400 group-hover:text-navy-900 transition-colors duration-300 leading-relaxed">{cat.description}</p>
       </FadeUp>
     </Link>
   );
@@ -83,24 +86,26 @@ export default function CategorySlider() {
   const inView = useInView(ref, { once: true, margin: '-60px' });
 
   return (
-    <section className="py-24">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
-        <div ref={ref} className="flex items-end justify-between mb-12">
+    <section className="py-24 lg:py-36 bg-white overflow-hidden">
+      <div className="max-w-[1100px] mx-auto px-8 md:px-12 lg:px-16">
+        <div ref={ref} className="flex items-end justify-between mb-20">
           <div>
             <LineReveal delay={0}>
-              <span className="text-[10px] font-jost text-navy-400 tracking-[0.3em] uppercase block mb-3">Solutions</span>
+              <span className="text-[10px] font-jost text-navy-300 tracking-[0.4em] uppercase block mb-4">Pilihan Terbaik</span>
             </LineReveal>
             <LineReveal delay={0.1}>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-medium text-navy-900">
-                Packaging <em className="font-light text-navy-400 not-italic">Solutions</em>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-medium text-navy-900 leading-tight">
+                Kategori <em className="font-light text-navy-300 not-italic">Produk</em>
               </h2>
             </LineReveal>
           </div>
-          <motion.div initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} transition={{ delay: 0.5 }}>
-            <Link to="/Shop" className="hidden md:flex overflow-hidden h-5 flex-col group">
-              <span className="block text-sm font-jost text-navy-400 transition-transform duration-300 group-hover:-translate-y-full">View all →</span>
-              <span className="block text-sm font-jost text-navy-900 transition-transform duration-300 group-hover:-translate-y-full">View all →</span>
-            </Link>
+          <motion.div initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} transition={{ duration: 0.6, delay: 0.4 }}>
+            <MagneticButton strength={20}>
+              <Link to="/Shop" className="hidden md:flex flex-col group overflow-hidden h-6">
+                <span className="text-sm font-jost text-navy-400 group-hover:-translate-y-full transition-transform duration-500 ease-expo">Eksplorasi Semua →</span>
+                <span className="text-sm font-jost text-navy-900 group-hover:-translate-y-full transition-transform duration-500 ease-expo">Eksplorasi Semua →</span>
+              </Link>
+            </MagneticButton>
           </motion.div>
         </div>
 

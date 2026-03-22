@@ -1,19 +1,17 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, SlidersHorizontal, X } from 'lucide-react';
-import { base44 } from '@/api/base44Client';
+import { products as allProducts, categories as CATEGORIES, materialsList as MATERIALS } from '../data/products';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ProductCard from '../components/ProductCard';
-
-const CATEGORIES = ['All', 'Coffee', 'Smoothies', 'Deli', 'Takeout', 'Cutlery', 'Bags', 'Extras'];
-const MATERIALS = ['All', 'PET', 'Kraft Paper', 'Bagasse', 'Bamboo', 'Paper Pulp', 'Plastic'];
+import PromoSlider from '../components/PromoSlider';
 
 export default function Shop() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [activeCategory, setActiveCategory] = useState('All');
-  const [activeMaterial, setActiveMaterial] = useState('All');
+  const [activeCategory, setActiveCategory] = useState('Semua');
+  const [activeMaterial, setActiveMaterial] = useState('Semua');
   const [searchQuery, setSearchQuery] = useState('');
   const [showFilters, setShowFilters] = useState(false);
 
@@ -26,22 +24,18 @@ export default function Shop() {
   }, []);
 
   useEffect(() => {
-    const load = async () => {
-      setLoading(true);
-      let data;
-      const filters = {};
-      if (activeCategory !== 'All') filters.category = activeCategory;
-      if (activeMaterial !== 'All') filters.material = activeMaterial;
-
-      if (Object.keys(filters).length > 0) {
-        data = await base44.entities.Product.filter(filters, '-created_date', 50);
-      } else {
-        data = await base44.entities.Product.list('-created_date', 50);
-      }
-      setProducts(data);
-      setLoading(false);
-    };
-    load();
+    setLoading(true);
+    let data = allProducts;
+    
+    if (activeCategory !== 'Semua') {
+      data = data.filter(p => p.category === activeCategory);
+    }
+    if (activeMaterial !== 'Semua') {
+      data = data.filter(p => p.material === activeMaterial);
+    }
+    
+    setProducts(data);
+    setLoading(false);
   }, [activeCategory, activeMaterial]);
 
   const filtered = searchQuery
@@ -51,34 +45,33 @@ export default function Shop() {
   return (
     <>
       <Navbar />
-      <main className="pt-20 min-h-screen">
-        {/* Header */}
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-10 pt-12 pb-8">
-          <motion.h1
-            className="text-4xl md:text-5xl lg:text-6xl font-display font-medium text-navy-900 mb-8"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            Shop all <span className="italic text-navy-500">products</span>
-          </motion.h1>
+      <main className="pt-20 min-h-screen transition-all duration-300">
+        {/* Top Promo Area */}
+        <div className="pb-2">
+           <PromoSlider />
+        </div>
 
-          {/* Search bar */}
-          <motion.div
-            className="relative max-w-md mb-8"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-navy-400" />
-            <input
-              type="text"
-              placeholder="Search products..."
-              value={searchQuery}
-              onChange={e => setSearchQuery(e.target.value)}
-              className="w-full pl-11 pr-4 py-3 bg-secondary rounded-xl text-sm text-navy-900 placeholder:text-navy-300 focus:outline-none focus:ring-2 focus:ring-navy-900/10"
-            />
-          </motion.div>
+        {/* Filters & Controls */}
+        <div className="max-w-[1100px] mx-auto px-10 md:px-16 lg:px-24">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+
+            {/* Search bar */}
+            <motion.div
+              className="relative w-full md:w-80"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-navy-400" />
+              <input
+                type="text"
+                placeholder="Cari produk..."
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                className="w-full pl-11 pr-4 py-3 bg-secondary rounded-2xl text-xs text-navy-900 placeholder:text-navy-300 focus:outline-none focus:ring-2 focus:ring-navy-900/10 transition-all border border-navy-50"
+              />
+            </motion.div>
+          </div>
 
           {/* Category tabs */}
           <motion.div
@@ -91,9 +84,9 @@ export default function Shop() {
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                className={`px-6 py-2.5 rounded-full text-xs font-semibold tracking-wider transition-all duration-300 ${
                   activeCategory === cat
-                    ? 'bg-navy-900 text-white'
+                    ? 'bg-navy-900 text-white shadow-xl shadow-navy-900/10 scale-105'
                     : 'bg-secondary text-navy-600 hover:bg-navy-100'
                 }`}
               >
@@ -102,10 +95,14 @@ export default function Shop() {
             ))}
             <button
               onClick={() => setShowFilters(!showFilters)}
-              className="ml-auto flex items-center gap-2 px-4 py-2 text-sm text-navy-600 hover:text-navy-900 transition-colors"
+              className={`ml-auto flex items-center gap-2 px-6 py-2.5 text-xs font-bold tracking-widest uppercase rounded-full transition-all duration-300 ${
+                showFilters 
+                ? 'bg-navy-50 text-navy-900' 
+                : 'text-navy-400 hover:text-navy-900'
+              }`}
             >
               <SlidersHorizontal className="w-4 h-4" />
-              Filters
+              Filter
             </button>
           </motion.div>
 
@@ -130,11 +127,10 @@ export default function Shop() {
                       <button
                         key={mat}
                         onClick={() => setActiveMaterial(mat)}
-                        className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
-                          activeMaterial === mat
+                        className={`px-4 py-2 rounded-full text-xs font-medium transition-all ${activeMaterial === mat
                             ? 'bg-navy-900 text-white'
                             : 'bg-white text-navy-600 hover:bg-navy-50'
-                        }`}
+                          }`}
                       >
                         {mat}
                       </button>
@@ -147,7 +143,7 @@ export default function Shop() {
         </div>
 
         {/* Products grid */}
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-10 pb-24">
+        <div className="max-w-[1100px] mx-auto px-10 md:px-16 lg:px-24 pb-24">
           {loading ? (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {[1, 2, 3, 4, 5, 6, 7, 8].map(i => (
@@ -160,8 +156,8 @@ export default function Shop() {
             </div>
           ) : filtered.length === 0 ? (
             <div className="text-center py-20">
-              <p className="text-navy-400 text-lg">No products found</p>
-              <p className="text-navy-300 text-sm mt-2">Try adjusting your search or filters</p>
+              <p className="text-navy-400 text-lg">Produk tidak ditemukan</p>
+              <p className="text-navy-300 text-sm mt-2">Coba sesuaikan pencarian atau filter Anda</p>
             </div>
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
