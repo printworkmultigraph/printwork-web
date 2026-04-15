@@ -42,7 +42,7 @@ export default function Navbar({ cartCount = 0 }) {
   const updateCartCount = () => {
     try {
       const cart = JSON.parse(localStorage.getItem('printwork_cart') || '[]');
-      const count = cart.reduce((total, item) => total + (item.quantity || 0), 0);
+      const count = cart.length;
       setLocalCartCount(count);
     } catch (e) {
       setLocalCartCount(0);
@@ -79,7 +79,6 @@ export default function Navbar({ cartCount = 0 }) {
 
   const isActive = (href) => {
     if (href === '#') return false;
-    // Adapt to yucca paths where /Home is root usually
     if (href === '/' && location.pathname === '/Home') return true;
     return location.pathname === href || location.pathname.startsWith(href + '/');
   };
@@ -335,7 +334,7 @@ export default function Navbar({ cartCount = 0 }) {
         </AnimatePresence>
       </header>
 
-      {/* Mobile Menu Dropdown — Moved Outside Header to Fix Stacking/Transparency Issues */}
+      {/* Mobile Menu Dropdown */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
