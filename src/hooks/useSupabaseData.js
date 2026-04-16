@@ -93,7 +93,7 @@ export function useInventory() {
     const toInsert = [];
 
     products.forEach(product => {
-      const variants = product.laminasi || ['Default'];
+      const variants = product.sizes || ['Default'];
       variants.forEach(variant => {
         const key = `${product.id}_${variant}`;
         if (!existing.includes(key)) {

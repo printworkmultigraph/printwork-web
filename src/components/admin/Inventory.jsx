@@ -5,6 +5,7 @@ import {
   CheckCircle2, XCircle, ChevronDown, ChevronUp, Bell, Save, Image, Trash2
 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
+import { usePreorders } from '../../hooks/useSupabaseData';
 import { products as allProducts } from '../../data/products';
 
 const TABS = [
@@ -22,9 +23,8 @@ export default function Inventory({ formatCurrency }) {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState({});
   
-  // Pre-orders
-  const [preorders, setPreorders] = useState([]);
-  const [poLoading, setPoLoading] = useState(true);
+  // Pre-orders hook
+  const { preorders, loading: poLoading, updateStatus: updatePOStatusHook, remove: removePO, openWhatsApp: openWAHook } = usePreorders();
   
   // Expanded products
   const [expandedProduct, setExpandedProduct] = useState(null);
@@ -47,28 +47,14 @@ export default function Inventory({ formatCurrency }) {
     setLoading(false);
   };
 
-  // Fetch pre-orders
-  const fetchPreorders = async () => {
-    setPoLoading(true);
-    const { data } = await supabase.from('preorders').select('*').order('created_at', { ascending: false });
-    setPreorders(data || []);
-    setPoLoading(false);
-  };
-
   useEffect(() => {
     fetchInventory();
-    fetchPreorders();
   }, []);
 
   // Get stock for a product variant
   const getStock = (productId, variantKey) => {
     const key = `${productId}_${variantKey}`;
     return inventoryMap[key]?.stock ?? null;
-  };
-
-  const getInventoryId = (productId, variantKey) => {
-    const key = `${productId}_${variantKey}`;
-    return inventoryMap[key]?.id ?? null;
   };
 
   // Save stock — upsert into Supabase
@@ -98,7 +84,7 @@ export default function Inventory({ formatCurrency }) {
       }
     } catch (err) {
       console.error('Error saving stock:', err);
-      alert('Gagal menyimpan stok. Silakan coba lagi.');
+      alert('Gagal menyimpan stok: ' + (err.message || 'Unknown error'));
     } finally {
       setSaving(prev => ({ ...prev, [saveKey]: false }));
       setEditingStock(null);
@@ -109,6 +95,20 @@ export default function Inventory({ formatCurrency }) {
     const currentStock = getStock(productId, variantKey) || 0;
     const newStock = Math.max(0, currentStock + delta);
     await saveStock(productId, productName, variantKey, newStock);
+  };
+
+  // Status updates
+  const updatePOStatus = async (id, status) => {
+    const success = await updatePOStatusHook(id, status);
+    if (!success) alert('Gagal update status pre-order.');
+  };
+
+  const handleDeletePreorder = async (id) => {
+    if (!window.confirm('Hapus pre-order ini secara permanen dari database?')) return;
+    const result = await removePO(id);
+    if (!result.success) {
+      alert('Gagal menghapus pre-order dari database: ' + (result.error?.message || 'Unknown error'));
+    }
   };
 
   // Filter products
@@ -163,7 +163,7 @@ export default function Inventory({ formatCurrency }) {
     return { totalProducts: allProducts.length, totalVariants, inStock, outOfStock, noData };
   }, [inventoryMap]);
 
-  // Pre-order stats
+  // Pre-order stats (using hook data)
   const poStats = useMemo(() => {
     const waiting = preorders.filter(p => p.status === 'pending').length;
     const contacted = preorders.filter(p => p.status === 'contacted').length;
@@ -183,28 +183,6 @@ export default function Inventory({ formatCurrency }) {
     { value: 'contacted', label: 'Contacted', color: 'bg-blue-50 text-blue-700 border-blue-200' },
     { value: 'fulfilled', label: 'Fulfilled', color: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
   ];
-
-  const updatePOStatus = async (id, status) => {
-    await supabase.from('preorders').update({ status }).eq('id', id);
-    setPreorders(prev => prev.map(p => p.id === id ? { ...p, status } : p));
-  };
-
-  const openWhatsApp = (phone, name, productName) => {
-    const message = `Halo Kak ${name},\n\nKabar baik! Stok ${productName} sudah ready lagi di Printwork. Karena kakak sudah pre-order duluan, kakak bisa langsung order sekarang ya.\n\nTerima kasih sudah menunggu! 🙏`;
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
-  };
-
-  const handleDeletePreorder = async (id) => {
-    if (!window.confirm('Hapus pre-order ini secara permanen dari database?')) return;
-    try {
-      const { error } = await supabase.from('preorders').delete().eq('id', id);
-      if (error) throw error;
-      setPreorders(prev => prev.filter(p => p.id !== id));
-    } catch (err) {
-      console.error('Error deleting preorder:', err);
-      alert('Gagal menghapus pre-order: ' + (err.message || 'Unknown error'));
-    }
-  };
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -538,17 +516,17 @@ export default function Inventory({ formatCurrency }) {
                           </td>
                           <td className="py-4 px-4">
                             <select
-                                value={po.status || 'pending'}
-                                onChange={e => updatePOStatus(po.id, e.target.value)}
-                                className={`px-3 py-1.5 rounded-full text-[10px] font-bold border cursor-pointer focus:outline-none ${statusConfig.color}`}
-                              >
-                                {PO_STATUS_OPTIONS.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
-                              </select>
+                              value={po.status || 'pending'}
+                              onChange={e => updatePOStatus(po.id, e.target.value)}
+                              className={`px-3 py-1.5 rounded-full text-[10px] font-bold border cursor-pointer focus:outline-none ${statusConfig.color}`}
+                            >
+                              {PO_STATUS_OPTIONS.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
+                            </select>
                           </td>
                           <td className="py-4 px-4">
                             <div className="flex items-center gap-2">
                               <button
-                                onClick={() => openWhatsApp(po.customer_phone, po.customer_name, po.product_name)}
+                                onClick={() => openWAHook(po.customer_phone, po.customer_name, po.product_name)}
                                 className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 text-emerald-700 rounded-lg text-[10px] font-bold hover:bg-emerald-100 transition-colors"
                               >
                                 <Phone size={10} /> WA
