@@ -79,6 +79,7 @@ export default function Navbar({ cartCount = 0 }) {
 
   const isActive = (href) => {
     if (href === '#') return false;
+    // Adapt to yucca paths where /Home is root usually
     if (href === '/' && location.pathname === '/Home') return true;
     return location.pathname === href || location.pathname.startsWith(href + '/');
   };
@@ -164,9 +165,13 @@ export default function Navbar({ cartCount = 0 }) {
 
             {/* Utility Icons */}
             <div className="flex items-center gap-3">
-              <Link to="/Shop" className="hidden sm:flex w-9 h-9 items-center justify-center rounded-full hover:bg-[#f5f5f5] transition-colors">
+              <button 
+                onClick={() => window.dispatchEvent(new Event('openCommandPalette'))}
+                className="hidden sm:flex w-9 h-9 items-center justify-center rounded-full hover:bg-[#f5f5f5] transition-colors"
+                aria-label="Search Command Palette"
+              >
                 <Search className="w-[17px] h-[17px] text-[#525252] hover:text-[#0D1B3E]" />
-              </Link>
+              </button>
               <Link to="/Cart" className="relative w-9 h-9 flex items-center justify-center rounded-full hover:bg-[#f5f5f5] transition-colors group">
                 <ShoppingBag className="w-[17px] h-[17px] text-[#525252] group-hover:text-[#0D1B3E]" />
                 <AnimatePresence>
@@ -334,7 +339,7 @@ export default function Navbar({ cartCount = 0 }) {
         </AnimatePresence>
       </header>
 
-      {/* Mobile Menu Dropdown */}
+      {/* Mobile Menu Dropdown — Moved Outside Header to Fix Stacking/Transparency Issues */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div

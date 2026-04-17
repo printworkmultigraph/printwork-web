@@ -18,6 +18,7 @@ export default function ProductCard({ product, index = 0 }) {
     >
       <Link to={`/ProductDetail?id=${product.id}`} className="group block">
         {/* Image with subtle reveal */}
+        <TiltCard>
         <div className="relative aspect-square bg-[#FAFAFA] rounded-3xl overflow-hidden mb-6 shadow-sm border border-navy-50/50">
           <motion.div
             className="absolute inset-0"
@@ -52,6 +53,7 @@ export default function ProductCard({ product, index = 0 }) {
             </div>
           )}
         </div>
+        </TiltCard>
 
         {/* Info */}
         <div className="px-1">

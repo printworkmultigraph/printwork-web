@@ -7,6 +7,8 @@ import PageTransition from './components/PageTransition';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import React, { Suspense } from 'react';
+import WhatsAppFAB from '@/components/WhatsAppFAB';
+import CommandPalette from '@/components/CommandPalette';
 
 const Home = React.lazy(() => import('./pages/Home'));
 const Shop = React.lazy(() => import('./pages/Shop'));
@@ -25,12 +27,17 @@ const LoadingFallback = () => (
   <div className="fixed inset-0 flex items-center justify-center bg-navy-900 z-50">
     <div className="flex flex-col items-center gap-6">
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 border-2 border-white/60 rounded-lg flex items-center justify-center">
-          <div className="w-4 h-4 bg-white/60 rounded-sm" />
-        </div>
-        <div>
-          <span className="text-white text-xl font-bold tracking-tight">PRINTWORK</span>
-          <span className="text-white/40 text-[10px] ml-1 tracking-[0.2em] uppercase">Indonesia</span>
+        <div className="flex flex-col items-center gap-2">
+          <img 
+            src="/images/logo_icon.png" 
+            alt="Printwork Icon" 
+            className="h-10 w-auto object-contain invert"
+          />
+          <img 
+            src="/images/new_logo.png" 
+            alt="Printwork Wordmark" 
+            className="h-5 w-auto object-contain brightness-0 invert"
+          />
         </div>
       </div>
       <div className="w-8 h-8 border-2 border-white/20 border-t-white/80 rounded-full animate-spin" />
@@ -85,6 +92,8 @@ function App() {
       <QueryClientProvider client={queryClientInstance}>
         <Router>
           <AuthenticatedApp />
+          <WhatsAppFAB />
+          <CommandPalette />
         </Router>
         <Toaster />
       </QueryClientProvider>

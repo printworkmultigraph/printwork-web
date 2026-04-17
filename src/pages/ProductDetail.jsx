@@ -42,6 +42,7 @@ export default function ProductDetail() {
   const [reviewComment, setReviewComment] = useState('');
   const [reviewSubmitting, setReviewSubmitting] = useState(false);
   const [reviewSuccess, setReviewSuccess] = useState(false);
+  const [showAllReviews, setShowAllReviews] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -764,7 +765,7 @@ export default function ProductDetail() {
               </div>
             ) : (
               <div className="space-y-0 divide-y divide-gray-50">
-                {reviews.slice(0, 10).map((review) => (
+                {(showAllReviews ? reviews : reviews.slice(0, 4)).map((review) => (
                   <div key={review.id} className="py-5">
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-3">
@@ -797,10 +798,42 @@ export default function ProductDetail() {
                 ))}
               </div>
             )}
+
+            {/* Show More / Less Toggle */}
+            {reviews.length > 4 && (
+              <div className="mt-8 text-center">
+                <button
+                  onClick={() => setShowAllReviews(!showAllReviews)}
+                  className="px-8 py-3 bg-white border border-gray-200 text-gray-900 text-xs font-bold rounded-lg hover:bg-gray-50 transition-all shadow-sm"
+                >
+                  {showAllReviews ? 'Sembunyikan Review' : `Lihat Semua Review (${reviews.length})`}
+                </button>
+              </div>
+            )}
           </div>
         </div>
-      </div>
 
+        {/* Related Products */}
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 mt-24">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-xl font-bold text-gray-900">Related Product</h2>
+            <Link to="/Shop" className="text-xs font-semibold text-gray-500 hover:text-gray-900 underline underline-offset-2">View All</Link>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
+            {relatedProducts.map((item) => (
+              <Link to={`/Product?id=${item.id}`} key={item.id} className="group block">
+                <div className="bg-[#f6f6f6] rounded-md aspect-square mb-4 p-4 flex items-center justify-center overflow-hidden">
+                  <img src={item.image} alt={item.name} className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500" />
+                </div>
+                <h3 className="text-sm font-semibold text-gray-900 mb-1 truncate">{item.name}</h3>
+                <p className="text-sm text-gray-500 font-medium">Rp {item.price.toLocaleString('id-ID')}</p>
+              </Link>
+            ))}
+          </div>
+        </div>
+
+      </div>
       <Footer />
     </>
   );
